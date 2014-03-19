@@ -132,7 +132,7 @@ public class PLA_ListView extends PLA_AbsListView {
         super(context, attrs, defStyle);
 
         TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.ListView, defStyle, 0);
+                R.styleable.PLA_ListView, defStyle, 0);
 
         //        final Drawable d = a.getDrawable(android.R.drawable.divider_horizontal_bright);
         //        if (d != null) {
@@ -141,26 +141,26 @@ public class PLA_ListView extends PLA_AbsListView {
         //        }
 
         final Drawable osHeader = a.getDrawable(
-                R.styleable.ListView_overScrollHeader);
+                R.styleable.PLA_ListView_overScrollHeader);
         if (osHeader != null) {
             setOverscrollHeader(osHeader);
         }
 
         final Drawable osFooter = a.getDrawable(
-                R.styleable.ListView_overScrollFooter);
+                R.styleable.PLA_ListView_overScrollFooter);
         if (osFooter != null) {
             setOverscrollFooter(osFooter);
         }
 
         // Use the height specified, zero being the default
         final int dividerHeight = a.getDimensionPixelSize(
-                R.styleable.ListView_dividerHeight, 0);
+                R.styleable.PLA_ListView_dividerHeight, 0);
         if (dividerHeight != 0) {
             setDividerHeight(dividerHeight);
         }
 
-        mHeaderDividersEnabled = a.getBoolean(R.styleable.ListView_headerDividersEnabled, true);
-        mFooterDividersEnabled = a.getBoolean(R.styleable.ListView_footerDividersEnabled, true);
+        mHeaderDividersEnabled = a.getBoolean(R.styleable.PLA_ListView_headerDividersEnabled, true);
+        mFooterDividersEnabled = a.getBoolean(R.styleable.PLA_ListView_footerDividersEnabled, true);
 
         a.recycle();
     }

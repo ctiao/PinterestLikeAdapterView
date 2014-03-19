@@ -35,7 +35,7 @@
         <attr name="ptrLastUpdateTextSize" format="dimension" />
     </declare-styleable>    
 
-    <declare-styleable name="View">
+    <declare-styleable name="PLA_View">
 
         <!--
              Supply an identifier name for this view, to later retrieve it
@@ -95,9 +95,9 @@
         <!-- Sets the padding, in pixels, of the bottom edge; see {@link android.R.attr#padding}. -->
         <attr name="paddingBottom" format="dimension" />
         <!-- Sets the padding, in pixels, of the start edge; see {@link android.R.attr#padding}. -->
-        <attr name="paddingStart" format="dimension" />
+        <!-- attr name="paddingStart" format="dimension" / -->
         <!-- Sets the padding, in pixels, of the end edge; see {@link android.R.attr#padding}. -->
-        <attr name="paddingEnd" format="dimension" />
+        <!-- attr name="paddingEnd" format="dimension" / -->
 
         <!--
              Boolean that controls whether a view can take focus.  By default the user can not
@@ -342,14 +342,14 @@
              the view will be able to achieve this minimum height (for example,
              if its parent layout constrains it with less available height).
         -->
-        <attr name="minHeight" format="dimension" />
+        <!--attr name="minHeight" format="dimension" / -->
 
         <!--
              Defines the minimum width of the view. It is not guaranteed
              the view will be able to achieve this minimum width (for example,
              if its parent layout constrains it with less available width).
         -->
-        <attr name="minWidth" format="dimension" />
+        <!--attr name="minWidth" format="dimension" / -->
 
         <!--
              Boolean that controls whether a view should have sound effects
@@ -625,7 +625,7 @@
          of its subclasses.  Also see {@link #ViewGroup_Layout} for
          attributes that this class processes in its children.
     -->
-    <declare-styleable name="ViewGroup">
+    <declare-styleable name="PLA_ViewGroup">
 
         <!--
              Defines whether changes in layout (caused by adding and removing items) should
@@ -719,7 +719,7 @@
         -->
         <attr name="splitMotionEvents" format="boolean" />
     </declare-styleable>
-    <declare-styleable name="AbsListView">
+    <declare-styleable name="PLA_AbsListView">
 
         <!-- Drawable used to indicate the currently selected item in the list. -->
         <attr name="listSelector" format="color|reference" />
@@ -814,7 +814,7 @@
         <attr name="fastScrollAlwaysVisible" format="boolean" />
     </declare-styleable>
     
-    <declare-styleable name="ListView">
+    <declare-styleable name="PLA_ListView">
 
         <!-- Drawable or color to draw between list items. -->
 		<!-- <attr name="divider" format="reference|color" /> -->

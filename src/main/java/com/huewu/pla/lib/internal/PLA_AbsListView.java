@@ -448,7 +448,7 @@ ViewTreeObserver.OnGlobalLayoutListener, ViewTreeObserver.OnTouchModeChangeListe
         initAbsListView();
 
         setVerticalScrollBarEnabled(true);
-        TypedArray a = context.obtainStyledAttributes(R.styleable.View);
+        TypedArray a = context.obtainStyledAttributes(R.styleable.PLA_View);
         initializeScrollbars(a);
         a.recycle();
     }
@@ -462,30 +462,30 @@ ViewTreeObserver.OnGlobalLayoutListener, ViewTreeObserver.OnTouchModeChangeListe
         initAbsListView();
 
         TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.AbsListView, defStyle, 0);
+                R.styleable.PLA_AbsListView, defStyle, 0);
 
-        Drawable d = a.getDrawable(R.styleable.AbsListView_listSelector);
+        Drawable d = a.getDrawable(R.styleable.PLA_AbsListView_listSelector);
         if (d != null) {
             setSelector(d);
         }
 
         mDrawSelectorOnTop = a.getBoolean(
-                R.styleable.AbsListView_drawSelectorOnTop, false);
+                R.styleable.PLA_AbsListView_drawSelectorOnTop, false);
 
-        boolean stackFromBottom = a.getBoolean(R.styleable.AbsListView_stackFromBottom, false);
+        boolean stackFromBottom = a.getBoolean(R.styleable.PLA_AbsListView_stackFromBottom, false);
         setStackFromBottom(stackFromBottom);
 
-        boolean scrollingCacheEnabled = a.getBoolean(R.styleable.AbsListView_scrollingCache, true);
+        boolean scrollingCacheEnabled = a.getBoolean(R.styleable.PLA_AbsListView_scrollingCache, true);
         setScrollingCacheEnabled(scrollingCacheEnabled);
 
-        int transcriptMode = a.getInt(R.styleable.AbsListView_transcriptMode,
+        int transcriptMode = a.getInt(R.styleable.PLA_AbsListView_transcriptMode,
                 TRANSCRIPT_MODE_DISABLED);
         setTranscriptMode(transcriptMode);
 
-        int color = a.getColor(R.styleable.AbsListView_cacheColorHint, 0);
+        int color = a.getColor(R.styleable.PLA_AbsListView_cacheColorHint, 0);
         setCacheColorHint(color);
 
-        boolean smoothScrollbar = a.getBoolean(R.styleable.AbsListView_smoothScrollbar, true);
+        boolean smoothScrollbar = a.getBoolean(R.styleable.PLA_AbsListView_smoothScrollbar, true);
         setSmoothScrollbarEnabled(smoothScrollbar);
 
         a.recycle();
