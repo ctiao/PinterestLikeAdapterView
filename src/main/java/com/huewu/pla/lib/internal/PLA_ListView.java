@@ -789,7 +789,7 @@ public class PLA_ListView extends PLA_AbsListView {
         p.forceAdd = true;
 
         int childWidthSpec = ViewGroup.getChildMeasureSpec(widthMeasureSpec,
-                mListPadding.left + mListPadding.right, p.width);
+                mListPadding.left + mListPadding.right, p.viewType == ITEM_VIEW_TYPE_FORCE_FILL_PARENT_WIDTH ? getMeasuredWidth() : p.width);
         int lpHeight = p.height;
         int childHeightSpec;
         if (lpHeight > 0) {
@@ -1341,7 +1341,7 @@ public class PLA_ListView extends PLA_AbsListView {
 
         if (needToMeasure) {
             int childWidthSpec = ViewGroup.getChildMeasureSpec(mWidthMeasureSpec,
-                    mListPadding.left + mListPadding.right, p.width);
+                    mListPadding.left + mListPadding.right, p.viewType == ITEM_VIEW_TYPE_FORCE_FILL_PARENT_WIDTH ? getMeasuredWidth() : p.width);
             int lpHeight = p.height;
             int childHeightSpec;
             if (lpHeight > 0) {
@@ -2207,6 +2207,21 @@ public class PLA_ListView extends PLA_AbsListView {
      * Clear any choices previously set
      */
     public void clearChoices() {
+    }
+    
+    public boolean isForceFillParentView(View v) {
+        ViewGroup.LayoutParams lp = v.getLayoutParams();
+        if (lp == null || (lp instanceof LayoutParams) == false) {
+            return false;
+        }
+        LayoutParams nlp = (LayoutParams) lp;
+       
+        return nlp.viewType == ITEM_VIEW_TYPE_FORCE_FILL_PARENT_WIDTH;
+    }
+    
+    public boolean isForceFillParentWidthViewPosition(int pos) {
+        int viewType = mAdapter.getItemViewType(pos);
+        return viewType == ITEM_VIEW_TYPE_FORCE_FILL_PARENT_WIDTH;
     }
 
 }//end of class

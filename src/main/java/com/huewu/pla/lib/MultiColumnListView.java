@@ -119,7 +119,7 @@ public class MultiColumnListView extends PLA_ListView {
 
 	@Override
 	protected void onMeasureChild(View child, int position, int widthMeasureSpec, int heightMeasureSpec) {
-		if(isFixedView(child))
+		if(isFixedView(child) || isForceFillParentView(child))
 			child.measure(widthMeasureSpec, heightMeasureSpec);
 		else
 			child.measure(MeasureSpec.EXACTLY | getColumnWidth(position), heightMeasureSpec);
@@ -217,17 +217,16 @@ public class MultiColumnListView extends PLA_ListView {
 
 	@Override
 	protected int getItemLeft(int pos) {
-		
-		if( isHeaderOrFooterPosition(pos) )
-			return mFixedColumn.getColumnLeft();
-		
+        if (isHeaderOrFooterPosition(pos) || isForceFillParentWidthViewPosition(pos) )
+            return mFixedColumn.getColumnLeft();
+
 		return getColumnLeft(pos);
 	}
 
 	@Override
 	protected int getItemTop( int pos ){
 
-		if( isHeaderOrFooterPosition(pos) )
+		if( isHeaderOrFooterPosition(pos) || isForceFillParentWidthViewPosition(pos) )
 			return mFixedColumn.getBottom();	//footer view should be placed below the last column.
 
 		int colIndex = mItems.get(pos, -1);
@@ -240,7 +239,7 @@ public class MultiColumnListView extends PLA_ListView {
 	@Override
 	protected int getItemBottom( int pos ){
 
-		if( isHeaderOrFooterPosition(pos) )
+		if( isHeaderOrFooterPosition(pos) || isForceFillParentWidthViewPosition(pos) )
 			return mFixedColumn.getTop();	//header view should be place above the first column item.
 
 		int colIndex = mItems.get(pos, -1);
@@ -357,7 +356,7 @@ public class MultiColumnListView extends PLA_ListView {
 			for( int index = 0; index < childCount; ++index ){
 				View v = getChildAt(index);
 
-				if(v.getLeft() != mColumnLeft && isFixedView(v) == false )
+				if(v.getLeft() != mColumnLeft  && v.getMeasuredWidth() == mColumnWidth && isFixedView(v) == false )
 					continue;
 				bottom = bottom < v.getBottom() ? v.getBottom() : bottom;
 			}
@@ -390,7 +389,7 @@ public class MultiColumnListView extends PLA_ListView {
 			int childCount = getChildCount();
 			for( int index = 0; index < childCount; ++index ){
 				View v = getChildAt(index);
-				if(v.getLeft() != mColumnLeft && isFixedView(v) == false )
+				if(v.getLeft() != mColumnLeft && v.getMeasuredWidth() == mColumnWidth && isFixedView(v) == false )
 					continue;
 				top = top > v.getTop() ? v.getTop() : top;
 			}

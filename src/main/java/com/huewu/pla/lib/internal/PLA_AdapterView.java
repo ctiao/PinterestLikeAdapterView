@@ -56,6 +56,12 @@ public abstract class PLA_AdapterView<T extends Adapter> extends ViewGroup {
 	 * the item is a header or footer.
 	 */
 	public static final int ITEM_VIEW_TYPE_HEADER_OR_FOOTER = -2;
+	
+	/**
+     * The item view type returned by {@link Adapter#getItemViewType(int)} when
+     * the item is a force-fill-parent-width view.
+     */
+	public static final int ITEM_VIEW_TYPE_FORCE_FILL_PARENT_WIDTH = - 3;
     
 	/**
 	 * The position of the first child displayed
