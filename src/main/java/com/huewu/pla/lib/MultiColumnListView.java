@@ -376,7 +376,7 @@ public class MultiColumnListView extends PLA_ListView {
 			for( int index = 0; index < childCount; ++index ){
 				View v = getChildAt(index);
 
-				if(v.getLeft() != mColumnLeft && isFixedView(v) == false )
+				if(v.getLeft() != mColumnLeft && v.getMeasuredWidth() == mColumnWidth && isFixedView(v) == false )
 					continue;
 
 				v.offsetTopAndBottom(offset);
