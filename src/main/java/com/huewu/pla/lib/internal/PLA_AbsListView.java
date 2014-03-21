@@ -2751,7 +2751,9 @@ ViewTreeObserver.OnGlobalLayoutListener, ViewTreeObserver.OnTouchModeChangeListe
          */
         @ViewDebug.ExportedProperty(mapping = {
                 @ViewDebug.IntToString(from = ITEM_VIEW_TYPE_IGNORE, to = "ITEM_VIEW_TYPE_IGNORE"),
-                @ViewDebug.IntToString(from = ITEM_VIEW_TYPE_HEADER_OR_FOOTER, to = "ITEM_VIEW_TYPE_HEADER_OR_FOOTER")
+                @ViewDebug.IntToString(from = ITEM_VIEW_TYPE_HEADER_OR_FOOTER, to = "ITEM_VIEW_TYPE_HEADER_OR_FOOTER"),
+                @ViewDebug.IntToString(from = ITEM_VIEW_TYPE_COLUMN_SPAN_ALL, to = "ITEM_VIEW_TYPE_COLUMN_SPAN_ALL"),
+                @ViewDebug.IntToString(from = ITEM_VIEW_TYPE_COLUMN_SPAN_ONE, to = "ITEM_VIEW_TYPE_COLUMN_SPAN_ONE")
         })
         public int viewType;
 
@@ -2885,7 +2887,7 @@ ViewTreeObserver.OnGlobalLayoutListener, ViewTreeObserver.OnTouchModeChangeListe
         }
 
         public boolean shouldRecycleViewType(int viewType) {
-            return viewType >= 0;
+            return viewType >= 0 || viewType < ITEM_VIEW_TYPE_HEADER_OR_FOOTER;
         }
 
         /**

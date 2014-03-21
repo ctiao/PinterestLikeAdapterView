@@ -56,6 +56,22 @@ public abstract class PLA_AdapterView<T extends Adapter> extends ViewGroup {
 	 * the item is a header or footer.
 	 */
 	public static final int ITEM_VIEW_TYPE_HEADER_OR_FOOTER = -2;
+	
+	/**
+     * The item view type returned by {@link Adapter#getItemViewType(int)} when
+     * the item is span across all columns.
+     */
+	public static final int ITEM_VIEW_TYPE_COLUMN_SPAN_ALL = -3;
+	
+	/**
+     * The item view type returned by {@link Adapter#getItemViewType(int)} when
+     * the item is span across one columns. 
+     * ITEM_VIEW_TYPE_COLUMN_SPAN_ONE * 2 means across two columns
+     * ITEM_VIEW_TYPE_COLUMN_SPAN_ONE * 3 means across three columns
+     * ...
+     * etc...
+     */
+	public static final int ITEM_VIEW_TYPE_COLUMN_SPAN_ONE = -4;
     
 	/**
 	 * The position of the first child displayed
