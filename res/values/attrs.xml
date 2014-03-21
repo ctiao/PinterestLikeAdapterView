@@ -95,9 +95,9 @@
         <!-- Sets the padding, in pixels, of the bottom edge; see {@link android.R.attr#padding}. -->
         <attr name="paddingBottom" format="dimension" />
         <!-- Sets the padding, in pixels, of the start edge; see {@link android.R.attr#padding}. -->
-        <attr name="paddingStart" format="dimension" />
+        <!--attr name="paddingStart" format="dimension" / -->
         <!-- Sets the padding, in pixels, of the end edge; see {@link android.R.attr#padding}. -->
-        <attr name="paddingEnd" format="dimension" />
+        <!-- attr name="paddingEnd" format="dimension" / -->
 
         <!--
              Boolean that controls whether a view can take focus.  By default the user can not
@@ -342,14 +342,14 @@
              the view will be able to achieve this minimum height (for example,
              if its parent layout constrains it with less available height).
         -->
-        <attr name="minHeight" format="dimension" />
+        <!-- attr name="minHeight" format="dimension" / -->
 
         <!--
              Defines the minimum width of the view. It is not guaranteed
              the view will be able to achieve this minimum width (for example,
              if its parent layout constrains it with less available width).
         -->
-        <attr name="minWidth" format="dimension" />
+        <!-- attr name="minWidth" format="dimension" / -->
 
         <!--
              Boolean that controls whether a view should have sound effects
