@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.View.MeasureSpec;
 
 import com.huewu.pla.lib.internal.PLA_ListView;
 
@@ -100,19 +99,24 @@ public class CrossMultiColumnListView extends PLA_ListView {
                 if (i >= colIndex + span) {
                     break;
                 }
-                mColumns[i].mItems.put(position, itemState);
+//                mColumns[i].mItems.put(position, itemState);
+                mColumns[i].mItems.append(position, itemState);
             }
         }
     }
 
     @Override
     protected void onLayoutSync(int syncPos) {
-        super.onLayoutSync(syncPos);
+        for( Column c : mColumns ){
+            c.save();
+        }
     }
 
     @Override
     protected void onLayoutSyncFinished(int syncPos) {
-        super.onLayoutSyncFinished(syncPos);
+        for( Column c : mColumns ){
+            c.clear();
+        }
     }
 
     @Override
@@ -130,23 +134,9 @@ public class CrossMultiColumnListView extends PLA_ListView {
         super.onAdjustChildViews(down);
     }
 
-    @Override
-    protected int getFillChildBottom() {
-        //return smallest bottom value.
-        //in order to determine fill down or not... (calculate below space)
-        int result = Integer.MAX_VALUE;
-        for(Column c : mColumns){
-            int bottom = c.getBottom();
-            result = result > bottom ? bottom : result;
-        }
-        return result;
-    }
 
-    @Override
-    protected int getFillChildTop() {
-        // find largest column.
-        return super.getFillChildTop();
-    }
+
+
 
     @Override
     protected int getScrollChildBottom() {
@@ -178,24 +168,67 @@ public class CrossMultiColumnListView extends PLA_ListView {
         
         return getColumnLeft(pos);
     }
+    
+    @Override
+    protected int getFillChildBottom() {
+        //return smallest bottom value.
+        //in order to determine fill down or not... (calculate below space)
+        int result = Integer.MAX_VALUE;
+        for(Column c : mColumns){
+            int bottom = c.getBottom();
+            result = result > bottom ? bottom : result;
+        }
+        return result;
+    }
 
     @Override
     protected int getItemTop(int pos) {
         if( isHeaderOrFooterPosition(pos) )
             return super.getItemTop(pos);
-        
         int span = getItemColumnSpanAtPosition(pos);
         Column col = getColumn(true, pos, span);
-        if(col != null){
+        if (col != null) {
+            if (span > 1) {
+                int start = col.getIndex();
+                for (int i = start; i < start + span; i++) {
+                    col = col.getBottom() < mColumns[i].getBottom() ? mColumns[i] : col;
+                }
+            }
             return col.getBottom();
         }
         return 0;
     }
+    
+    @Override
+    protected int getFillChildTop() {
+        //find largest column.
+        int result = Integer.MIN_VALUE;
+        for(Column c : mColumns){
+            int top = c.getTop();
+            result = result < top ? top : result;
+        }
+        return result;
+    }
 
     @Override
     protected int getItemBottom(int pos) {
-        return super.getItemBottom(pos);
+        if( isHeaderOrFooterPosition(pos) )
+            return super.getItemTop(pos);
+        int span = getItemColumnSpanAtPosition(pos);
+        Column col = getColumn(false, pos, span);
+        if(col != null){
+            if (span > 1) {
+                int start = col.getIndex();
+                for (int i = start; i < start + span; i++) {
+                    col = col.getTop() > mColumns[i].getTop() ? mColumns[i] : col;
+                }
+            }
+            return col.getTop();
+        }
+        return 0;
     }
+    
+    
 
     // ////////////////////////////////////////////////////////////////////////////
     // Private Methods...
@@ -262,8 +295,9 @@ public class CrossMultiColumnListView extends PLA_ListView {
         else if (type <= ITEM_VIEW_TYPE_COLUMN_SPAN_ONE){
             span = type / ITEM_VIEW_TYPE_COLUMN_SPAN_ONE;
         }
-        if (span >= 1)
+        if (span > 1) {
             return span;
+        }
         return 1;
     }
 
@@ -324,10 +358,22 @@ public class CrossMultiColumnListView extends PLA_ListView {
         private int mIndex;
         private int mColumnWidth;
         private int mColumnLeft;
+        private int mSynchedTop;
+        private int mSynchedBottom;
 
         
         public Column(int index) {
             mIndex = index;
+        }
+
+        public void save() {
+            mSynchedTop = 0;
+            mSynchedBottom = getTop(); //getBottom();
+        }
+
+        public void clear() {
+            mSynchedTop = 0;
+            mSynchedBottom = 0;
         }
 
         public void offsetTopAndBottom(int offset) {
@@ -402,7 +448,7 @@ public class CrossMultiColumnListView extends PLA_ListView {
             }
 
             if (bottom == Integer.MIN_VALUE)
-                return 0; // no child for this column..
+                return mSynchedBottom; // no child for this column..
             return bottom;
         }
         
