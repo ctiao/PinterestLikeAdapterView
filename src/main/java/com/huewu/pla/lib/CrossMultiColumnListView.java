@@ -2,10 +2,13 @@
 package com.huewu.pla.lib;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
 
+import com.huewu.pla.R;
 import com.huewu.pla.lib.internal.PLA_ListView;
 
 /**
@@ -23,6 +26,8 @@ public class CrossMultiColumnListView extends PLA_ListView {
     private Column[] mColumns = null;
     private Column mFixedColumn = null; //column for footers & headers.
 
+    private Rect mFrameRect = new Rect();
+
     public CrossMultiColumnListView(Context context) {
         super(context);
         init(null);
@@ -39,10 +44,31 @@ public class CrossMultiColumnListView extends PLA_ListView {
     }
 
     private void init(AttributeSet attrs) {
+        getWindowVisibleDisplayFrame(mFrameRect );
+
+        if( attrs == null ){
+            mColumnNumber = DEFAULT_COLUMN_NUMBER;  //default column number is 2.
+        }else{
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.MultiColumnListView);
+
+            int landColNumber = a.getInteger(R.styleable.MultiColumnListView_plaLandscapeColumnNumber, -1);
+            int defColNumber = a.getInteger(R.styleable.MultiColumnListView_plaColumnNumber, -1);
+
+            if(mFrameRect.width() > mFrameRect.height() && landColNumber != -1 ){
+                mColumnNumber = landColNumber;
+            }else if(defColNumber != -1){
+                mColumnNumber = defColNumber;
+            }else{
+                mColumnNumber = DEFAULT_COLUMN_NUMBER;
+            }
+            
+            a.recycle();
+        }
+
         mColumns = new Column[mColumnNumber];
         for( int i = 0; i < mColumnNumber; ++i )
             mColumns[i] = new Column(i);
-        
+
         mFixedColumn = new FixedColumn();
     }
 
@@ -386,10 +412,13 @@ public class CrossMultiColumnListView extends PLA_ListView {
             for( int index = 0; index < childCount; ++index ){
                 View v = getChildAt(index);
 
-                if(v.getLeft() != mColumnLeft && isFixedView(v) == false )
-                    continue;
+                int viewLeft = v.getLeft();
+                int viewRight = v.getRight();
+                if (isFixedView(v)
+                        || ((viewLeft >= getLeft() && viewLeft < getRight()) || (viewRight > getLeft() && viewRight <= getRight()))) {
 
                 v.offsetTopAndBottom(offset);
+                }
             }
         }
 
